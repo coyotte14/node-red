@@ -1,0 +1,514 @@
+[
+    {
+        "id": "d204d5ad.edfe9",
+        "type": "tab",
+        "label": "Meteo2"
+    },
+    {
+        "id": "da82e9ce.f4f24",
+        "type": "inject",
+        "z": "d204d5ad.edfe9",
+        "name": "Every 5mn",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "900",
+        "crontab": "",
+        "once": true,
+        "x": 111,
+        "y": 69,
+        "wires": [
+            [
+                "8040008b.55dd7"
+            ]
+        ]
+    },
+    {
+        "id": "6879c8dc.3fc9f8",
+        "type": "function",
+        "z": "d204d5ad.edfe9",
+        "name": "Set DarkSky global var",
+        "func": "try {\nvar weathertest=msg.payload.currently;\nglobal.set(\"DarkSky\",msg.payload);\nnode.send (msg);\n}\ncatch(e) {}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 601,
+        "y": 70,
+        "wires": [
+            [
+                "b782c842.92af8"
+            ]
+        ]
+    },
+    {
+        "id": "8040008b.55dd7",
+        "type": "http request",
+        "z": "d204d5ad.edfe9",
+        "name": "Darksky Json Get",
+        "method": "GET",
+        "ret": "obj",
+        "url": "https://api.darksky.net/forecast/xxxxxxxxxxxxxxxxxxxxxxxxxxx/49.213999,-0.400256?units=si",
+        "tls": "",
+        "x": 313,
+        "y": 70,
+        "wires": [
+            [
+                "6879c8dc.3fc9f8"
+            ]
+        ]
+    },
+    {
+        "id": "b782c842.92af8",
+        "type": "debug",
+        "z": "d204d5ad.edfe9",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 816,
+        "y": 71,
+        "wires": []
+    },
+    {
+        "id": "1a34606d.3cfa7",
+        "type": "inject",
+        "z": "d204d5ad.edfe9",
+        "name": "Every 5mn",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "900",
+        "crontab": "",
+        "once": true,
+        "x": 106,
+        "y": 530,
+        "wires": [
+            [
+                "b0310696.7e01d8",
+                "1ddbca0c.d48146",
+                "ca2ef009.4e8078",
+                "de117818.109008",
+                "f5b58eb.8e62d7",
+                "4438aaeb.2c8a8c",
+                "c84c1a5c.2de3a8",
+                "e4ca29fb.4ed1a"
+            ]
+        ]
+    },
+    {
+        "id": "b0310696.7e01d8",
+        "type": "function",
+        "z": "d204d5ad.edfe9",
+        "name": "Get DarkSky global var",
+        "func": "try {\nmsg.payload=global.get(\"DarkSky\").currently.icon;\nnode.send(msg);\n}\ncatch(e) {}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 383,
+        "y": 397,
+        "wires": [
+            [
+                "84d9a8fa.b01c38"
+            ]
+        ]
+    },
+    {
+        "id": "1c96daa1.e7e845",
+        "type": "ui_template",
+        "z": "d204d5ad.edfe9",
+        "group": "b0283373.e0cf4",
+        "name": "TPL",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n  .filled { \n      height: 100% !important;\n \n      padding: 0 !important;\n      margin: 0 !important;\n  }\n  .nr-dashboard-template {\n      padding: 0;\n      margin: 0;\n  }\n   \n  .rounded {\n  border-radius: 12px 12px 12px 12px;\n}\n  \n   .bigfont {\n  font-size: 18px;\n}\n \n   .smallfont {\n  font-size: 12px;\n}\n   \n</style>\n \n<script>\n$('.vibrate').on('click', function() {\n  navigator.vibrate(100);\n});\n \nfunction restore_bg(x) {\n            $(this).css(\"background-color\", x);\n    };\n \n$('.touched').on('mousedown', function() {\n    var x= $(this).css(\"background-color\");\n    $(this).css(\"background-color\", \"yellow\");\n     \n    setTimeout(restore_bg.bind(this,x),200);\n    navigator.vibrate(80);\n    });\n     \n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 608,
+        "y": 345,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1ddbca0c.d48146",
+        "type": "function",
+        "z": "d204d5ad.edfe9",
+        "name": "Get DarkSky global var J+1",
+        "func": "try {\nmsg.payload=global.get(\"DarkSky\").daily.data[2].icon;\nnode.send(msg);\n}\ncatch(e) {}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 443,
+        "wires": [
+            [
+                "e763b3a7.b4d0d"
+            ]
+        ]
+    },
+    {
+        "id": "9cfefaca.7dd3c",
+        "type": "debug",
+        "z": "d204d5ad.edfe9",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 764,
+        "y": 397,
+        "wires": []
+    },
+    {
+        "id": "84d9a8fa.b01c38",
+        "type": "ui_template",
+        "z": "d204d5ad.edfe9",
+        "group": "b0283373.e0cf4",
+        "name": "Day",
+        "order": 3,
+        "width": "1",
+        "height": "1",
+        "format": "<script src=\"/myjs/skycons.js\"></script>\n \n<canvas id=\"icon1\"  width=\"50\" height=\"50\"></canvas>\n \n<script>\nvar skycons = new Skycons({\"monochrome\": false, \n                \"colors\": { \n                      \"main\": \"#779966\", \n                      \"moon\":\"#666666\",\n                      \"fog\": \"#555522\",\n                      \"fogbank\": \"#884488\",\n                      \"cloud\": \"#999999\",\n                      \"snow\": \"#aaaaaa\",\n                      \"leaf\":\"#00ff00\",\n                      \"rain\": \"#0000ff\",\n                      \"sun\": \"#ff3300\"\n                    } });\nskycons.add(\"icon1\", Skycons.PARTLY_CLOUDY_DAY);\nskycons.play();\n \n    (function(scope) {\n        scope.$watch('msg.payload', function(data) {\n           if (data==\"clear-day\") skycons.set(\"icon1\", Skycons.CLEAR_DAY);\n           if (data==\"clear-night\") skycons.set(\"icon1\", Skycons.CLEAR_NIGHT);\n           if (data==\"partly-cloudy-day\") skycons.set(\"icon1\", Skycons.PARTLY_CLOUDY_DAY);\n           if (data==\"partly-cloudy-night\") skycons.set(\"icon1\", Skycons.PARTLY_CLOUDY_NIGHT);\n           if (data==\"cloudy\") skycons.set(\"icon1\", Skycons.CLOUDY);\n           if (data==\"rain\") skycons.set(\"icon1\", Skycons.RAIN);\n           if (data==\"sleet\") skycons.set(\"icon1\", Skycons.SLEET);\n           if (data==\"snow\") skycons.set(\"icon1\", Skycons.SNOW);\n           if (data==\"wind\") skycons.set(\"icon1\", Skycons.WIND);\n           if (data==\"fog\") skycons.set(\"icon1\", Skycons.FOG);\n        });\n    })(scope);\n \n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 602,
+        "y": 397,
+        "wires": [
+            [
+                "9cfefaca.7dd3c"
+            ]
+        ]
+    },
+    {
+        "id": "e763b3a7.b4d0d",
+        "type": "ui_template",
+        "z": "d204d5ad.edfe9",
+        "group": "b0283373.e0cf4",
+        "name": "Day+1",
+        "order": 4,
+        "width": "1",
+        "height": "1",
+        "format": "<canvas id=\"icon2\"  width=\"50\" height=\"50\"></canvas>\n \n<script>\nvar skycons = new Skycons({\"monochrome\": false, \n                \"colors\": { \n                      \"main\": \"#779966\", \n                      \"moon\":\"#666666\",\n                      \"fog\": \"#555522\",\n                      \"fogbank\": \"#884488\",\n                      \"cloud\": \"#999999\",\n                      \"snow\": \"#aaaaaa\",\n                      \"leaf\":\"#00ff00\",\n                      \"rain\": \"#0000ff\",\n                      \"sun\": \"#ff3300\"\n                    } });\nskycons.add(\"icon2\", Skycons.PARTLY_CLOUDY_DAY);\nskycons.play();\n \n    (function(scope) {\n        scope.$watch('msg.payload', function(data) {\n           if (data==\"clear-day\") skycons.set(\"icon2\", Skycons.CLEAR_DAY);\n           if (data==\"clear-night\") skycons.set(\"icon2\", Skycons.CLEAR_NIGHT);\n           if (data==\"partly-cloudy-day\") skycons.set(\"icon2\", Skycons.PARTLY_CLOUDY_DAY);\n           if (data==\"partly-cloudy-night\") skycons.set(\"icon2\", Skycons.PARTLY_CLOUDY_NIGHT);\n           if (data==\"cloudy\") skycons.set(\"icon2\", Skycons.CLOUDY);\n           if (data==\"rain\") skycons.set(\"icon2\", Skycons.RAIN);\n           if (data==\"sleet\") skycons.set(\"icon2\", Skycons.SLEET);\n           if (data==\"snow\") skycons.set(\"icon2\", Skycons.SNOW);\n           if (data==\"wind\") skycons.set(\"icon2\", Skycons.WIND);\n           if (data==\"fog\") skycons.set(\"icon2\", Skycons.FOG);\n        });\n    })(scope);\n \n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 601,
+        "y": 443,
+        "wires": [
+            [
+                "eec49625.f76198"
+            ]
+        ]
+    },
+    {
+        "id": "2d2639db.595b6e",
+        "type": "ui_template",
+        "z": "d204d5ad.edfe9",
+        "group": "b0283373.e0cf4",
+        "name": "Day+2",
+        "order": 5,
+        "width": "1",
+        "height": "1",
+        "format": "<canvas id=\"icon3\"  width=\"50\" height=\"50\"></canvas>\n \n<script>\nvar skycons = new Skycons({\"monochrome\": false, \n                \"colors\": { \n                      \"main\": \"#779966\", \n                      \"moon\":\"#666666\",\n                      \"fog\": \"#555522\",\n                      \"fogbank\": \"#884488\",\n                      \"cloud\": \"#999999\",\n                      \"snow\": \"#aaaaaa\",\n                      \"leaf\":\"#00ff00\",\n                      \"rain\": \"#0000ff\",\n                      \"sun\": \"#ff3300\"\n                    } });\nskycons.add(\"icon3\", Skycons.PARTLY_CLOUDY_DAY);\nskycons.play();\n \n    (function(scope) {\n        scope.$watch('msg.payload', function(data) {\n           if (data==\"clear-day\") skycons.set(\"icon3\", Skycons.CLEAR_DAY);\n           if (data==\"clear-night\") skycons.set(\"icon3\", Skycons.CLEAR_NIGHT);\n           if (data==\"partly-cloudy-day\") skycons.set(\"icon3\", Skycons.PARTLY_CLOUDY_DAY);\n           if (data==\"partly-cloudy-night\") skycons.set(\"icon3\", Skycons.PARTLY_CLOUDY_NIGHT);\n           if (data==\"cloudy\") skycons.set(\"icon3\", Skycons.CLOUDY);\n           if (data==\"rain\") skycons.set(\"icon3\", Skycons.RAIN);\n           if (data==\"sleet\") skycons.set(\"icon3\", Skycons.SLEET);\n           if (data==\"snow\") skycons.set(\"icon3\", Skycons.SNOW);\n           if (data==\"wind\") skycons.set(\"icon3\", Skycons.WIND);\n           if (data==\"fog\") skycons.set(\"icon3\", Skycons.FOG);\n        });\n    })(scope);\n \n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 599,
+        "y": 494,
+        "wires": [
+            [
+                "d410b7b7.b93118"
+            ]
+        ]
+    },
+    {
+        "id": "d479b389.26a55",
+        "type": "ui_template",
+        "z": "d204d5ad.edfe9",
+        "group": "b0283373.e0cf4",
+        "name": "Day+3",
+        "order": 6,
+        "width": "1",
+        "height": "1",
+        "format": "<canvas id=\"icon4\"  width=\"50\" height=\"50\"></canvas>\n \n<script>\nvar skycons = new Skycons({\"monochrome\": false, \n                \"colors\": { \n                      \"main\": \"#779966\", \n                      \"moon\":\"#666666\",\n                      \"fog\": \"#555522\",\n                      \"fogbank\": \"#884488\",\n                      \"cloud\": \"#999999\",\n                      \"snow\": \"#aaaaaa\",\n                      \"leaf\":\"#00ff00\",\n                      \"rain\": \"#0000ff\",\n                      \"sun\": \"#ff3300\"\n                    } });\nskycons.add(\"icon4\", Skycons.PARTLY_CLOUDY_DAY);\nskycons.play();\n \n    (function(scope) {\n        scope.$watch('msg.payload', function(data) {\n           if (data==\"clear-day\") skycons.set(\"icon4\", Skycons.CLEAR_DAY);\n           if (data==\"clear-night\") skycons.set(\"icon4\", Skycons.CLEAR_NIGHT);\n           if (data==\"partly-cloudy-day\") skycons.set(\"icon4\", Skycons.PARTLY_CLOUDY_DAY);\n           if (data==\"partly-cloudy-night\") skycons.set(\"icon4\", Skycons.PARTLY_CLOUDY_NIGHT);\n           if (data==\"cloudy\") skycons.set(\"icon4\", Skycons.CLOUDY);\n           if (data==\"rain\") skycons.set(\"icon4\", Skycons.RAIN);\n           if (data==\"sleet\") skycons.set(\"icon4\", Skycons.SLEET);\n           if (data==\"snow\") skycons.set(\"icon4\", Skycons.SNOW);\n           if (data==\"wind\") skycons.set(\"icon4\", Skycons.WIND);\n           if (data==\"fog\") skycons.set(\"icon4\", Skycons.FOG);\n        });\n    })(scope);\n \n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 600,
+        "y": 543,
+        "wires": [
+            [
+                "465e0be8.10f764"
+            ]
+        ]
+    },
+    {
+        "id": "93374d64.3f75c8",
+        "type": "ui_template",
+        "z": "d204d5ad.edfe9",
+        "group": "b0283373.e0cf4",
+        "name": "Day+4",
+        "order": 7,
+        "width": "1",
+        "height": "1",
+        "format": "<canvas id=\"icon5\"  width=\"50\" height=\"50\"></canvas>\n \n<script>\nvar skycons = new Skycons({\"monochrome\": false, \n                \"colors\": { \n                      \"main\": \"#779966\", \n                      \"moon\":\"#666666\",\n                      \"fog\": \"#555522\",\n                      \"fogbank\": \"#884488\",\n                      \"cloud\": \"#999999\",\n                      \"snow\": \"#aaaaaa\",\n                      \"leaf\":\"#00ff00\",\n                      \"rain\": \"#0000ff\",\n                      \"sun\": \"#ff3300\"\n                    } });\nskycons.add(\"icon5\", Skycons.PARTLY_CLOUDY_DAY);\nskycons.play();\n \n    (function(scope) {\n        scope.$watch('msg.payload', function(data) {\n           if (data==\"clear-day\") skycons.set(\"icon5\", Skycons.CLEAR_DAY);\n           if (data==\"clear-night\") skycons.set(\"icon5\", Skycons.CLEAR_NIGHT);\n           if (data==\"partly-cloudy-day\") skycons.set(\"icon5\", Skycons.PARTLY_CLOUDY_DAY);\n           if (data==\"partly-cloudy-night\") skycons.set(\"icon5\", Skycons.PARTLY_CLOUDY_NIGHT);\n           if (data==\"cloudy\") skycons.set(\"icon5\", Skycons.CLOUDY);\n           if (data==\"rain\") skycons.set(\"icon5\", Skycons.RAIN);\n           if (data==\"sleet\") skycons.set(\"icon5\", Skycons.SLEET);\n           if (data==\"snow\") skycons.set(\"icon5\", Skycons.SNOW);\n           if (data==\"wind\") skycons.set(\"icon5\", Skycons.WIND);\n           if (data==\"fog\") skycons.set(\"icon5\", Skycons.FOG);\n        });\n    })(scope);\n \n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 600,
+        "y": 596,
+        "wires": [
+            [
+                "97478426.efba7"
+            ]
+        ]
+    },
+    {
+        "id": "994cc9c0.c6bb8",
+        "type": "ui_template",
+        "z": "d204d5ad.edfe9",
+        "group": "b0283373.e0cf4",
+        "name": "Day+5",
+        "order": 8,
+        "width": "1",
+        "height": "1",
+        "format": "<canvas id=\"icon6\"  width=\"50\" height=\"50\"></canvas>\n \n<script>\nvar skycons = new Skycons({\"monochrome\": false, \n                \"colors\": { \n                      \"main\": \"#779966\", \n                      \"moon\":\"#666666\",\n                      \"fog\": \"#555522\",\n                      \"fogbank\": \"#884488\",\n                      \"cloud\": \"#999999\",\n                      \"snow\": \"#aaaaaa\",\n                      \"leaf\":\"#00ff00\",\n                      \"rain\": \"#0000ff\",\n                      \"sun\": \"#ff3300\"\n                    } });\nskycons.add(\"icon6\", Skycons.PARTLY_CLOUDY_DAY);\nskycons.play();\n \n    (function(scope) {\n        scope.$watch('msg.payload', function(data) {\n           if (data==\"clear-day\") skycons.set(\"icon6\", Skycons.CLEAR_DAY);\n           if (data==\"clear-night\") skycons.set(\"icon6\", Skycons.CLEAR_NIGHT);\n           if (data==\"partly-cloudy-day\") skycons.set(\"icon6\", Skycons.PARTLY_CLOUDY_DAY);\n           if (data==\"partly-cloudy-night\") skycons.set(\"icon6\", Skycons.PARTLY_CLOUDY_NIGHT);\n           if (data==\"cloudy\") skycons.set(\"icon6\", Skycons.CLOUDY);\n           if (data==\"rain\") skycons.set(\"icon6\", Skycons.RAIN);\n           if (data==\"sleet\") skycons.set(\"icon6\", Skycons.SLEET);\n           if (data==\"snow\") skycons.set(\"icon6\", Skycons.SNOW);\n           if (data==\"wind\") skycons.set(\"icon6\", Skycons.WIND);\n           if (data==\"fog\") skycons.set(\"icon6\", Skycons.FOG);\n        });\n    })(scope);\n \n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 598,
+        "y": 646,
+        "wires": [
+            [
+                "4c2c10c7.c70928"
+            ]
+        ]
+    },
+    {
+        "id": "ca2ef009.4e8078",
+        "type": "function",
+        "z": "d204d5ad.edfe9",
+        "name": "Get DarkSky global var J+2",
+        "func": "try {\nmsg.payload=global.get(\"DarkSky\").daily.data[3].icon;\nnode.send(msg);\n}\ncatch(e) {}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 386,
+        "y": 493,
+        "wires": [
+            [
+                "2d2639db.595b6e"
+            ]
+        ]
+    },
+    {
+        "id": "de117818.109008",
+        "type": "function",
+        "z": "d204d5ad.edfe9",
+        "name": "Get DarkSky global var J+3",
+        "func": "try {\nmsg.payload=global.get(\"DarkSky\").daily.data[4].icon;\nnode.send(msg);\n}\ncatch(e) {}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 387,
+        "y": 543,
+        "wires": [
+            [
+                "d479b389.26a55"
+            ]
+        ]
+    },
+    {
+        "id": "f5b58eb.8e62d7",
+        "type": "function",
+        "z": "d204d5ad.edfe9",
+        "name": "Get DarkSky global var J+4",
+        "func": "try {\nmsg.payload=global.get(\"DarkSky\").daily.data[5].icon;\nnode.send(msg);\n}\ncatch(e) {}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 595,
+        "wires": [
+            [
+                "93374d64.3f75c8"
+            ]
+        ]
+    },
+    {
+        "id": "4438aaeb.2c8a8c",
+        "type": "function",
+        "z": "d204d5ad.edfe9",
+        "name": "Get DarkSky global var J+5",
+        "func": "try {\nmsg.payload=global.get(\"DarkSky\").daily.data[6].icon;\nnode.send(msg);\n}\ncatch(e) {}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 646,
+        "wires": [
+            [
+                "994cc9c0.c6bb8"
+            ]
+        ]
+    },
+    {
+        "id": "eec49625.f76198",
+        "type": "debug",
+        "z": "d204d5ad.edfe9",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 766,
+        "y": 443,
+        "wires": []
+    },
+    {
+        "id": "d410b7b7.b93118",
+        "type": "debug",
+        "z": "d204d5ad.edfe9",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 765,
+        "y": 494,
+        "wires": []
+    },
+    {
+        "id": "465e0be8.10f764",
+        "type": "debug",
+        "z": "d204d5ad.edfe9",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 767,
+        "y": 543,
+        "wires": []
+    },
+    {
+        "id": "97478426.efba7",
+        "type": "debug",
+        "z": "d204d5ad.edfe9",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 766,
+        "y": 595,
+        "wires": []
+    },
+    {
+        "id": "4c2c10c7.c70928",
+        "type": "debug",
+        "z": "d204d5ad.edfe9",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 769,
+        "y": 646,
+        "wires": []
+    },
+    {
+        "id": "c84c1a5c.2de3a8",
+        "type": "function",
+        "z": "d204d5ad.edfe9",
+        "name": "Day-week",
+        "func": "(function() {\n    //var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];\n    //var days = ['Dimanche','Lundi','Mardi','Mercredi','jeudi','Vendredi','Samedi'];\n    //var days = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];\n    var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];\n\n    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];\n\n    Date.prototype.getMonthName = function() {\n        return months[ this.getMonth() ];\n    };\n    Date.prototype.getDayName = function() {\n        return days[ this.getDay() ];\n    };\n    \n    Date.prototype.addDays = function(days) {\n        this.setDate(this.getDate() + parseInt(days));\n    return this;\n    };\n})();\n\nmsg = {};\nvar now = new Date();\nmsg.d0 = now.getDayName();\nmsg.d1 = new Date().addDays(1).getDayName(); //+1 days\nmsg.d2 = new Date().addDays(2).getDayName(); //+2 days\nmsg.d3 = new Date().addDays(3).getDayName(); //+3 days\nmsg.d4 = new Date().addDays(4).getDayName(); //+4 days\nmsg.d5 = new Date().addDays(5).getDayName(); //+5 days\n\nmsg.payload=msg.d0;\nvar month = now.getMonthName();\n        node.status({text:msg.payload});\n        \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 345,
+        "y": 160,
+        "wires": [
+            [
+                "a68330c4.43d5f",
+                "80429d2c.eeeda"
+            ]
+        ]
+    },
+    {
+        "id": "a68330c4.43d5f",
+        "type": "ui_template",
+        "z": "d204d5ad.edfe9",
+        "group": "b0283373.e0cf4",
+        "name": "Day-Week",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "format": "<div layout=\"row\" layout-align=\"space-between\" style=\"padding:0px; text-align: left; margin:2px; border:2px solid white;\">\n<span style=\"width:17%;padding-top:5px;padding-left:5px;\">{{msg.d0}}</span>\n<span style=\"width:16%;padding-top:5px;padding-left:5px;\">{{msg.d1}}</span>\n<span style=\"width:16%;padding-top:5px;padding-left:5px;\">{{msg.d2}}</span>\n<span style=\"width:16%;padding-top:5px;padding-left:5px;\">{{msg.d3}}</span>\n<span style=\"width:16%;padding-top:5px;padding-left:5px;\">{{msg.d4}}</span>\n<span style=\"width:16%;padding-top:5px;padding-left:5px;\">{{msg.d5}}</span>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 628,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "80429d2c.eeeda",
+        "type": "debug",
+        "z": "d204d5ad.edfe9",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 604,
+        "y": 190,
+        "wires": []
+    },
+    {
+        "id": "e4ca29fb.4ed1a",
+        "type": "function",
+        "z": "d204d5ad.edfe9",
+        "name": "T° Min/Max",
+        "func": "msg.tmin1=Math.round(global.get(\"DarkSky\").daily.data[1].temperatureMin);\nmsg.tmin2=Math.round(global.get(\"DarkSky\").daily.data[2].temperatureMin);\nmsg.tmin3=Math.round(global.get(\"DarkSky\").daily.data[3].temperatureMin);\nmsg.tmin4=Math.round(global.get(\"DarkSky\").daily.data[4].temperatureMin);\nmsg.tmin5=Math.round(global.get(\"DarkSky\").daily.data[5].temperatureMin);\nmsg.tmin6=Math.round(global.get(\"DarkSky\").daily.data[6].temperatureMin);\n\nmsg.tmax1=Math.round(global.get(\"DarkSky\").daily.data[1].temperatureMax);\nmsg.tmax2=Math.round(global.get(\"DarkSky\").daily.data[2].temperatureMax);\nmsg.tmax3=Math.round(global.get(\"DarkSky\").daily.data[3].temperatureMax);\nmsg.tmax4=Math.round(global.get(\"DarkSky\").daily.data[4].temperatureMax);\nmsg.tmax5=Math.round(global.get(\"DarkSky\").daily.data[5].temperatureMax);\nmsg.tmax6=Math.round(global.get(\"DarkSky\").daily.data[6].temperatureMax);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 355,
+        "y": 258,
+        "wires": [
+            [
+                "6967683c.449488",
+                "7e2704ce.a85b2c"
+            ]
+        ]
+    },
+    {
+        "id": "6967683c.449488",
+        "type": "ui_template",
+        "z": "d204d5ad.edfe9",
+        "group": "b0283373.e0cf4",
+        "name": "T° Min/Max",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "format": "<div layout=\"row\" layout-align=\"space-between\" style=\"padding:0px; text-align: left; margin:2px; border:2px solid white;\">\n<span style=\"width:17%;padding-top:5px;padding-left:5px;\">{{msg.tmin1 + \"°/\" + msg.tmax1 + \"°\"}}</span>\n<span style=\"width:16%;padding-top:5px;padding-left:5px;\">{{msg.tmin2 + \"°/\" + msg.tmax2 + \"°\"}}</span>\n<span style=\"width:16%;padding-top:5px;padding-left:5px;\">{{msg.tmin3 + \"°/\" + msg.tmax3 + \"°\"}}</span>\n<span style=\"width:16%;padding-top:5px;padding-left:5px;\">{{msg.tmin4 + \"°/\" + msg.tmax4 + \"°\"}}</span>\n<span style=\"width:16%;padding-top:5px;padding-left:5px;\">{{msg.tmin5 + \"°/\" + msg.tmax5 + \"°\"}}</span>\n<span style=\"width:16%;padding-top:5px;padding-left:5px;\">{{msg.tmin6 + \"°/\" + msg.tmax6 + \"°\"}}</span>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 633,
+        "y": 239,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7e2704ce.a85b2c",
+        "type": "debug",
+        "z": "d204d5ad.edfe9",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 610,
+        "y": 282,
+        "wires": []
+    },
+    {
+        "id": "b0283373.e0cf4",
+        "type": "ui_group",
+        "z": "",
+        "name": "Météo de la semaine",
+        "tab": "772753cc.2bb214",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "772753cc.2bb214",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Météo2",
+        "icon": "dashboard",
+        "order": 4
+    }
+]
